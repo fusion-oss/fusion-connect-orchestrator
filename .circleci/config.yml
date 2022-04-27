@@ -25,9 +25,10 @@ workflows:
               ignore:
                 - master
                 - /HOTFIX-.*/
-      - marvel/maven-release:
+      - marvel/maven-release-docker:
           context:
             - OSSRH
+            - DOCKER_SCOPERETAIL
             - SLACK
           filters:
             branches:
