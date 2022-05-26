@@ -1,46 +1,58 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<configuration monitorinterval="60">
-    <properties>
-        <property name="log-path">logs</property>
-        <property name="archive">${log-path}/archive</property>
-    </properties>
-    <appenders>
-        <console name="Console-Appender" target="SYSTEM_OUT">
-            <patternlayout>
-                <pattern>
-                    [%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
-                    <!--                %m%n-->
-                </pattern>>
-            </patternlayout>
-        </console>
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration monitorInterval="60">
+    <Properties>
+        <Property name="file-name-prefix">fusion-connect-orchestrator</Property>
+        <Property name="log-path">logs</Property>
+        <Property name="LOG_EXCEPTION_CONVERSION_WORD">%xwEx</Property>
+        <Property name="LOG_LEVEL_PATTERN">%5p</Property>
+        <Property name="LOG_DATEFORMAT_PATTERN">yyyy-MM-dd HH:mm:ss.SSS</Property>
+        <Property name="FILE_LOG_PATTERN">%d{${LOG_DATEFORMAT_PATTERN}}	${LOG_LEVEL_PATTERN} --- [%t] %c : %m%n${sys:LOG_EXCEPTION_CONVERSION_WORD}
+        </Property>
+    </Properties>
+    <Appenders>
+        <RollingFile name="App-File-Appender"
+                     fileName="${log-path}/${file-name-prefix}.log"
+                     filePattern="${log-path}/${file-name-prefix}-%d{yyyy-MM-dd}-%i.log"
+                     immediateFlush="false" append="false">
+            <PatternLayout>
+                <pattern>${FILE_LOG_PATTERN}</pattern>
+            </PatternLayout>
+
+            <Policies>
+                <SizeBasedTriggeringPolicy size="2 MB" />
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${log-path}">
+                    <IfFileName glob="${file-name-prefix}-*.log" />
+                    <IfLastModified age="7d" />
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
         <file name="File-Appender" filename="${log-path}/error.log">
             <patternlayout>
                 <pattern>
-                    [%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+                    ${FILE_LOG_PATTERN}
                 </pattern>
             </patternlayout>
         </file>
-        <!--        <rollingfile name="RollingFile-Appender" filename="${log-path}/rollingfile.log" filepattern="${archive}/rollingfile.log.%d{yyyy-MM-dd-hh-mm}.gz">-->
-        <!--            <patternlayout pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n">-->
-        <!--                <policies>-->
-        <!--                    <timebasedtriggeringpolicy>-->
-        <!--                        <sizebasedtriggeringpolicy size="30 MB">-->
-        <!--                        </sizebasedtriggeringpolicy></timebasedtriggeringpolicy></policies>-->
-        <!--                <defaultrolloverstrategy max="30">-->
-        <!--                </defaultrolloverstrategy></patternlayout></rollingfile>-->
-    </appenders>
+        <Console name="App-Console-Appender" target="SYSTEM_OUT">
+            <PatternLayout>
+                <Pattern>${FILE_LOG_PATTERN}</Pattern>
+            </PatternLayout>
+        </Console>
+    </Appenders>
+
+
     <loggers>
-        <logger name="guru.springframework.blog.log4j2xml" level="debug" additivity="false">
+        <logger name="com.scoperetail" level="debug" additivity="false">
             <appenderref ref="File-Appender" level="info"/>
-            <!--                <appenderref ref="RollingFile-Appender" level="debug">-->
-            <appenderref ref="Console-Appender" level="debug"/>
-            <!--                </appenderref>&lt;!&ndash;</appenderref>&ndash;&gt;-->
-            <!--            </appenderref>-->
+            <appenderref ref="App-Console-Appender" level="debug"/>
         </logger>
         <root level="debug">
-            <appenderref ref="Console-Appender">
+            <appenderref ref="App-Console-Appender">
             </appenderref>
             <appenderref ref="File-Appender"></appenderref>
         </root>
     </loggers>
-</configuration>
+
+</Configuration>

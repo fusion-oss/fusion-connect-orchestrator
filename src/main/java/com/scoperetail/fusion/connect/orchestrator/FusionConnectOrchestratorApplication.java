@@ -33,7 +33,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class FusionConnectOrchestratorApplication {
-//  private static final Logger LOGGER = LogManager.getLogger(FusionConnectOrchestratorApplication.class);
 
   public static void main(final String[] args) {
     SpringApplication.run(FusionConnectOrchestratorApplication.class, args);
