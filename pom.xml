@@ -118,30 +118,6 @@
 					<changeLogFile>src/main/resources/changelog/changelog.xml</changeLogFile>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>${spring.version}</version>
-				<executions>
-					<execution>
-						<id>Repackage</id>
-						<goals>
-							<goal>repackage</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>BuildInfoGenerator</id>
-						<goals>
-							<goal>build-info</goal>
-						</goals>
-						<configuration>
-							<additionalProperties>
-								<java.version>${java.version}</java.version>
-							</additionalProperties>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 	</build>
 	<profiles>
