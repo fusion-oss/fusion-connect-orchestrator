@@ -2,7 +2,7 @@
 <Configuration monitorInterval="60">
     <Properties>
         <Property name="file-name-prefix">fusion-connect-orchestrator</Property>
-        <Property name="log-path">c:/logs</Property>
+        <Property name="log-path">/appl/fusion/connect</Property>
         <Property name="LOG_EXCEPTION_CONVERSION_WORD">%xwEx</Property>
         <Property name="LOG_LEVEL_PATTERN">%5p</Property>
         <Property name="LOG_DATEFORMAT_PATTERN">yyyy-MM-dd HH:mm:ss.SSS</Property>
@@ -49,7 +49,12 @@
             <appenderref ref="App-Console-Appender" level="debug"/>
             <appenderref ref="App-File-Appender" level="debug"/>
         </logger>
-        <root level="debug">
+        <Logger name="org.apache.camel" level="INFO" additivity="false">
+            <appenderref ref="File-Appender"/>
+			<AppenderRef ref="App-File-Appender" />
+			<AppenderRef ref="App-Console-Appender"/>
+		</Logger>
+        <root level="ERROR">
             <appenderref ref="App-Console-Appender">
             </appenderref>
             <appenderref ref="File-Appender"></appenderref>

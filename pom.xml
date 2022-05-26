@@ -19,6 +19,7 @@
 		<fusion.connect.core.version>0.41</fusion.connect.core.version>
 		<spring.version>2.4.5</spring.version>
 		<spring-cloud.version>3.0.4</spring-cloud.version>
+		<liquibase-core.version>3.10.3</liquibase-core.version>
 	</properties>
 
 	<scm>
@@ -94,6 +95,17 @@
 			<artifactId>spring-boot-starter-log4j2</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+			<version>${liquibase-core.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>ch.qos.logback</groupId>
+					<artifactId>logback-classic</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -105,6 +117,30 @@
 					<propertyFile>src/main/resources/liquibase/liquibase-maven-plugin.properties</propertyFile>
 					<changeLogFile>src/main/resources/changelog/changelog.xml</changeLogFile>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>${spring.version}</version>
+				<executions>
+					<execution>
+						<id>Repackage</id>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>BuildInfoGenerator</id>
+						<goals>
+							<goal>build-info</goal>
+						</goals>
+						<configuration>
+							<additionalProperties>
+								<java.version>${java.version}</java.version>
+							</additionalProperties>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
