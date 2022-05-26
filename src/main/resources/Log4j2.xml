@@ -2,7 +2,7 @@
 <Configuration monitorInterval="60">
     <Properties>
         <Property name="file-name-prefix">fusion-connect-orchestrator</Property>
-        <Property name="log-path">logs</Property>
+        <Property name="log-path">c:/logs</Property>
         <Property name="LOG_EXCEPTION_CONVERSION_WORD">%xwEx</Property>
         <Property name="LOG_LEVEL_PATTERN">%5p</Property>
         <Property name="LOG_DATEFORMAT_PATTERN">yyyy-MM-dd HH:mm:ss.SSS</Property>
@@ -11,7 +11,7 @@
     </Properties>
     <Appenders>
         <RollingFile name="App-File-Appender"
-                     fileName="${log-path}/${file-name-prefix}.log"
+                     fileName="${log-path}/${file-name-prefix}-RollingFile.log"
                      filePattern="${log-path}/${file-name-prefix}-%d{yyyy-MM-dd}-%i.log"
                      immediateFlush="false" append="false">
             <PatternLayout>
@@ -28,7 +28,7 @@
                 </Delete>
             </DefaultRolloverStrategy>
         </RollingFile>
-        <file name="File-Appender" filename="${log-path}/error.log">
+        <file name="File-Appender" filename="${log-path}/${file-name-prefix}.log">
             <patternlayout>
                 <pattern>
                     ${FILE_LOG_PATTERN}
@@ -47,6 +47,7 @@
         <logger name="com.scoperetail" level="debug" additivity="false">
             <appenderref ref="File-Appender" level="info"/>
             <appenderref ref="App-Console-Appender" level="debug"/>
+            <appenderref ref="App-File-Appender" level="debug"/>
         </logger>
         <root level="debug">
             <appenderref ref="App-Console-Appender">
