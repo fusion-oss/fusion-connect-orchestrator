@@ -11,7 +11,7 @@
     </Properties>
     <Appenders>
         <RollingFile name="App-File-Appender"
-                     fileName="${log-path}/${file-name-prefix}-RollingFile.log"
+                     fileName="${log-path}/${file-name-prefix}-RollinFile.log"
                      filePattern="${log-path}/${file-name-prefix}-%d{yyyy-MM-dd}-%i.log"
                      immediateFlush="false" append="false">
             <PatternLayout>
